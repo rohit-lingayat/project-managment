@@ -1,0 +1,4 @@
+.nested-fields
+  .field
+    = f.select :user_id, options_for_select(User.developers, f.object.user.id)
+  = link_to_remove_association "remove user", f

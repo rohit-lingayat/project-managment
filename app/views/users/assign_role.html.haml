@@ -1,0 +1,14 @@
+.div.user-table
+  = form_for @user, url: {action: "assign_role"}, html: {class: "nifty_form"} do |f|
+    .form-group.personalInfo
+      .col-md-4.mb-lg
+        %label.control-label
+          Assign Role to #{@user.first_name}
+      .col-md-4.mb-lg
+        %label.control-label
+          Select Role
+          = f.select :roles, options_for_select(Role.pluck(:name)), {}, { multiple: true, id: 'dropDown'}
+    = f.submit "Create"
+
+
+

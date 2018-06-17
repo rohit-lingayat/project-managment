@@ -1,0 +1,21 @@
+%table
+  %tr
+    %th Project Name
+    %th Todos
+    %th Status
+  - @all_projects.each do |project|
+    - todos = project.todos
+    %tr
+      %td= project.name
+      %td
+        %table
+          - if todos.present?
+            - todos.each do |todo|
+              %tr
+                %td= todo.task
+      %td
+        %table
+          - if todos.present?
+            - todos.each do |todo|
+              %tr
+                %td= todo.status

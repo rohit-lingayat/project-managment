@@ -1,0 +1,6 @@
+.div.user-table
+	%h1 Dashboard
+	- if current_user.admin?
+		= render 'admin_dashboad'
+	- else
+		= render 'user_dashboad'
