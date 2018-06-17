@@ -28,12 +28,8 @@ class ProjectsController < ApplicationController
           redirect_to @project,
                       notice: 'Project was successfully created.'
         end
-        format.json { render :show, status: :created, location: @project }
       else
         format.html { render :new }
-        format.json do
-          render json: @project.errors, status: :unprocessable_entity
-        end
       end
     end
   end

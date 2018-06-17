@@ -15,6 +15,7 @@
     last_name: last_name,
     email: Faker::Internet.email(first_name),
     password: 'temp1234',
-    password_confirmation: 'temp1234'
+    password_confirmation: 'temp1234',
+    roles: [:developer],
   )
 end
