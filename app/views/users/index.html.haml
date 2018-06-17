@@ -1,0 +1,18 @@
+.div.user-table
+  %h2 Users List
+  %table
+    %tr
+      %th First Name
+      %th Last Name
+      %th Email
+      %th Role
+      %th Action
+    - @users.each do |user|
+      %tr
+        %td= user.first_name
+        %td= user.last_name
+        %td= user.email
+        %td= user.roles
+        %td
+          = link_to 'Assign Role', assign_role_user_path(user)
+  = paginate @users

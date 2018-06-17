@@ -1,0 +1,15 @@
+= form_for @todo do |f|
+  - if @todo.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@todo.errors.count, "error")} prohibited this todo from being saved:"
+      %ul
+        - @todo.errors.full_messages.each do |msg|
+          %li= msg
+  .form-group
+    .col-md-4.mb-lg
+      %span
+        %label Project Status
+      %span
+        = f.select :status, options_for_select(TODO_STATUS, f.object&.status || 'ToDo')
+  %br
+  = f.submit 'Update'

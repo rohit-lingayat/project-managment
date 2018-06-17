@@ -1,0 +1,27 @@
+= form_for @project do |f|
+  - if @project.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@project.errors.count, "error")} prohibited this project from being saved:"
+      %ul
+        - @project.errors.full_messages.each do |msg|
+          %li= msg
+  .form-group
+    .col-md-4.mb-lg
+      %span
+        %label Project Name
+      %span
+        = f.text_field :name, class: 'form-control'
+  .form-group
+    .col-md-4.mb-lg
+      %span
+        %label Assign Developers
+      %span
+        = select_tag "project[users][]", options_from_collection_for_select(User.developers, :id, :first_name, @project.users.pluck(:id)), id: 'dropDown', multiple: true
+  %h3 Tasks
+  #tasks
+    = f.fields_for :todos do |todo|
+      = render 'todo_fields', f: todo
+    .links
+      = link_to_add_association 'add task', f, :todos, data: { turbolinks: false } 
+  .actions
+    = f.submit 'Save'
