@@ -12,14 +12,13 @@ RSpec.describe ProjectsController, type: :controller do
 
   describe 'GET #index' do
     it 'assigns @projects' do
-      project = create(:project)
       get :index
       expect(assigns(:projects)).to eq([project])
     end
   end
 
-  describe 'POST #create' do
-    it 'creates porject' do
+  describe 'PATCH #create' do
+    it 'Create porject' do
       expect {
         project_params = FactoryBot.attributes_for(:project, :with_todos)
         post :create, params: { project: project_params }
@@ -27,9 +26,29 @@ RSpec.describe ProjectsController, type: :controller do
     end
   end
 
-  describe 'PATCH #update' do
-    it 'update porject' do
-      put :update, id: project.id, project: { name: 'Test' }
+  describe 'DESTROY #destroy' do
+    it 'Delete project' do
+      expect {
+        delete :destroy, params: { id: project.id }
+      }.to_not change(Project, :count)
+    end
+  end
+
+  describe 'UPDATE #update' do
+    it 'Update project' do
+      patch :update, params: { id: project.id, project: { name: 'test' } }
+      assigns[:project].should_not be_new_record
+      flash[:notice].should_not be_nil
+      expect(assigns[:project].name).to eq('test')
+      response.should redirect_to(:project)
+    end
+  end
+
+  describe 'UPDATE #update' do
+    it 'Not Update project' do
+      expect {
+        patch :update, params: { id: 6, project: { name: 'test' } }
+      }.to raise_exception(ActiveRecord::RecordNotFound)
     end
   end
 end
