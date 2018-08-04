@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+  before_action :authenticate_user!
   load_and_authorize_resource
   before_action :set_project, only: [:show, :edit, :update, :destroy]
   after_action :assign_users
@@ -21,6 +22,7 @@ class ProjectsController < ApplicationController
   end
 
   def create
+    binding.pry
     @project = Project.new(project_params)
     respond_to do |format|
       if @project.save
@@ -61,9 +63,9 @@ class ProjectsController < ApplicationController
   end
 
   def assign_users
-    return unless params[:project] && params[:project][:users]
+    return unless params[:project] && params[:project][:users].reject!{ |user| user.blank? }
+    @project.users.destroy_all
     params[:project][:users].each do |user|
-      @project.users.destroy_all
       @project.users << User.find_by(id: user)
     end
   end

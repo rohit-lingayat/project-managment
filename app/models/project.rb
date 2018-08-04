@@ -5,4 +5,7 @@ class Project < ApplicationRecord
 
   accepts_nested_attributes_for :users
   accepts_nested_attributes_for :todos, reject_if: :all_blank, allow_destroy: true
+
+  validates :todos, presence: true
+  validates_associated :todos, message: 'Please enter todo'
 end
